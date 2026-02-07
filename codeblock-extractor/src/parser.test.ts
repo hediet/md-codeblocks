@@ -458,6 +458,50 @@ class Counter {}
     });
   });
 
+  describe('nested code blocks', () => {
+    it('ignores directives inside code blocks', () => {
+      const md = `<!-- @codeblock example.md -->
+\`\`\`\`markdown
+<!-- @codeblock-config
+outDir: .examples
+-->
+
+<!-- @codeblock counter.tsx -->
+\`\`\`tsx
+const x = 1;
+\`\`\`
+\`\`\`\``;
+      const result = parse(md, 'test.md');
+
+      expect(simplify(result)).toMatchInlineSnapshot(`
+        {
+          "document": {
+            "nodes": [
+              {
+                "annotation": {
+                  "file": "example.md",
+                },
+                "code": "<!-- @codeblock-config
+        outDir: .examples
+        -->
+
+        <!-- @codeblock counter.tsx -->
+        \`\`\`tsx
+        const x = 1;
+        \`\`\`",
+                "language": "markdown",
+                "rawAnnotationComment": "<!-- @codeblock example.md -->",
+                "type": "codeblock",
+              },
+            ],
+            "sourcePath": "test.md",
+          },
+          "errors": [],
+        }
+      `);
+    });
+  });
+
   describe('position tracking', () => {
     it('tracks code block positions', () => {
       const md = `# Title

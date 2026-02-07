@@ -139,6 +139,11 @@ function tokenize(source: string): Token[] {
 
   // Process matches and fill in text between them
   for (const m of matches) {
+    // Skip matches that are inside a previously processed code block
+    if (m.start < pos) {
+      continue;
+    }
+
     // Add text before this match
     if (m.start > pos) {
       const textContent = source.slice(pos, m.start);
