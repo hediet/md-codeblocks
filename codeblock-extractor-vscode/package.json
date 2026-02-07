@@ -1,0 +1,73 @@
+{
+  "name": "codeblock-extractor-vscode",
+  "displayName": "Codeblock Extractor",
+  "description": "VS Code extension for markdown codeblock extraction with @codeblock annotations",
+  "version": "0.0.1",
+  "publisher": "vscode",
+  "private": true,
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:markdown"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "codeblockExtractor.extract",
+        "title": "Extract Codeblocks",
+        "category": "Codeblock Extractor"
+      },
+      {
+        "command": "codeblockExtractor.cleanStaleFiles",
+        "title": "Clean Stale Files",
+        "category": "Codeblock Extractor",
+        "icon": "$(trash)"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "codeblockExtractor.cleanStaleFiles",
+          "when": "editorLangId == markdown && codeblockExtractor.hasStaleFiles",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Codeblock Extractor",
+      "properties": {
+        "codeblockExtractor.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable codeblock extractor features"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "watch": "rollup -c -w",
+    "test": "npx vitest --run",
+    "test:watch": "npx vitest",
+    "package": "vsce package"
+  },
+  "dependencies": {
+    "@vscode/codeblock-extractor": "workspace:*"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^28.0.0",
+    "@rollup/plugin-node-resolve": "^15.3.0",
+    "@rollup/plugin-typescript": "^12.1.0",
+    "@types/node": "^22.0.0",
+    "@types/vscode": "^1.85.0",
+    "rollup": "^4.21.0",
+    "tslib": "^2.6.0",
+    "typescript": "~5.7.0",
+    "vitest": "^2.1.0"
+  }
+}
