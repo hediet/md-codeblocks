@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "extract": "pnpm --filter @vscode/codeblock-extractor run build && node codeblock-extractor/dist/cli/index.js extract README.md codeblock-extractor/README.md codeblock-extractor-vscode/README.md",
+    "test-readme": "vitest run --config vitest.config.ts"
+  },
+  "devDependencies": {
+    "vitest": "^2.0.0"
+  }
+}

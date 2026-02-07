@@ -1,6 +1,6 @@
 # Codeblock Extractor for VS Code
 
-Editor integration for `@vscode/codeblock-extractor`. Get TypeScript language features inside markdown code blocks.
+Editor integration for `@vscode/codeblock-extractor`. Get language features (hover, completions, diagnostics) inside Markdown code blocks.
 
 ## Features
 
@@ -8,7 +8,7 @@ Editor integration for `@vscode/codeblock-extractor`. Get TypeScript language fe
 
 Generated files are kept in sync as you edit markdown. Changes are debounced (300ms) to avoid excessive disk I/O.
 
-### TypeScript Language Features
+### Language Features
 
 Inside annotated code blocks, you get:
 
@@ -55,13 +55,13 @@ When editing a markdown file with stale (orphaned) generated files, a trash icon
 
 ## How It Works
 
-The extension creates an "editor projection" from generated TypeScript files back into your markdown:
+The extension creates an "editor projection" from generated files back into your Markdown:
 
 1. **Parse** - Markdown is parsed to find `@codeblock` annotations
-2. **Generate** - TypeScript files are written to the configured `outDir`
-3. **Project** - TypeScript language server results are mapped back to markdown positions
+2. **Generate** - Files are written to the configured `outDir`
+3. **Project** - Language server results are mapped back to Markdown positions
 
-This means you get full TypeScript support without leaving your documentation.
+This means you get full language support without leaving your documentation.
 
 ## Configuration
 

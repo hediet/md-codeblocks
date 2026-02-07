@@ -28,6 +28,12 @@ jobs:
       - run: pnpm --filter @vscode/codeblock-extractor run test
       - run: pnpm --filter codeblock-extractor-vscode run test
 
+      - name: Extract README examples
+        run: pnpm run extract
+
+      - name: Test README examples
+        run: pnpm run test-readme
+
       - name: Pack npm package
         run: pnpm --filter @vscode/codeblock-extractor pack
         working-directory: codeblock-extractor
