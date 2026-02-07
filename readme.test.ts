@@ -1,7 +1,7 @@
 import { readFileSync, readdirSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, basename } from 'node:path';
 import { describe, expect, test } from 'vitest';
-import { parse, generate } from './codeblock-extractor/src/index.js';
+import { parse, generate, CodeBlockNode } from './codeblock-extractor/src/index.js';
 
 function extractFile(content: string, sourcePath: string) {
   const { document } = parse(content, sourcePath);
@@ -9,82 +9,24 @@ function extractFile(content: string, sourcePath: string) {
   return files.map(f => ({ path: f.path, content: f.content }));
 }
 
+function getExpectedFiles(content: string, sourcePath: string): Map<string, string> {
+  const { document } = parse(content, sourcePath);
+  const expected = new Map<string, string>();
+  for (const node of document.nodes) {
+    if (node instanceof CodeBlockNode && node.annotation?.additionalFiles) {
+      for (const af of node.annotation.additionalFiles) {
+        // suffix like ".expected/counter.tsx" → "counter.tsx"
+        const filename = basename(af.suffix);
+        expected.set(filename, af.content);
+      }
+    }
+  }
+  return expected;
+}
+
 describe('README codeblock extraction', () => {
   const readmeSource = readFileSync('README.md', 'utf-8');
   const readmeFiles = extractFile(readmeSource, 'README.md');
-
-  test('root README extracted files', () => {
-    expect(readmeFiles).toMatchInlineSnapshot(`
-      [
-        {
-          "content": "<!-- @codeblock-config
-      outDir: .examples
-      -->
-
-      <!-- @codeblock counter.tsx -->
-      \`\`\`tsx
-      import { useState } from "react";
-
-      export function Counter() {
-        const [count, setCount] = useState(0);
-        return <button onClick={() => setCount(c => c + 1)}>{count}</button>;
-      }
-      \`\`\`
-
-      <!-- @codeblock -->
-      \`\`\`tsx
-      // Continuation of counter.tsx
-      export default Counter;
-      \`\`\`",
-          "path": "example.md",
-        },
-        {
-          "content": "<!-- @codeblock-config
-      outDir: .examples
-      prefix: |
-        // Auto-generated — do not edit
-      postfix: |
-        export {};
-      -->
-
-      <!-- @codeblock greeter.ts -->
-      \`\`\`ts
-      export function greet(name: string) {
-        return \`Hello, \${name}!\`;
-      }
-      \`\`\`",
-          "path": "config-example.md",
-        },
-        {
-          "content": "<!-- @codeblock-config
-      outDir: .examples
-      -->
-
-      <!-- @codeblock
-      file: math.ts
-      replace:
-        - ["PLACEHOLDER", "42"]
-      -->
-      \`\`\`ts
-      export const answer = PLACEHOLDER;
-      \`\`\`
-
-      <!-- @codeblock
-      skip: true
-      -->
-      \`\`\`ts
-      // This block is skipped — for display only
-      \`\`\`
-
-      <!-- @codeblock -->
-      \`\`\`ts
-      export const pi = 3.14;
-      \`\`\`",
-          "path": "annotation-example.md",
-        },
-      ]
-    `);
-  });
 
   const examplesDir = '.examples';
   const mdFiles = readdirSync(examplesDir).filter(f => f.endsWith('.md'));
@@ -105,46 +47,27 @@ describe('README codeblock extraction', () => {
   }
 
   test('all examples are themselves extractable', () => {
-    const innerExtractions: Record<string, { path: string; content: string }[]> = {};
     for (const mdFile of mdFiles) {
       const found = readmeFiles.find(f => f.path === mdFile)!;
-      innerExtractions[mdFile] = extractFile(found.content, mdFile);
+      const extracted = extractFile(found.content, mdFile);
+      expect(extracted.length, `${mdFile} should produce files`).toBeGreaterThan(0);
     }
-    expect(innerExtractions).toMatchInlineSnapshot(`
-      {
-        "annotation-example.md": [
-          {
-            "content": "export const answer = 42;
+  });
 
-      export const pi = 3.14;",
-            "path": "math.ts",
-          },
-        ],
-        "config-example.md": [
-          {
-            "content": "// Auto-generated — do not edit
-      export function greet(name: string) {
-        return \`Hello, \${name}!\`;
-      }
-      export {};",
-            "path": "greeter.ts",
-          },
-        ],
-        "example.md": [
-          {
-            "content": "import { useState } from "react";
+  test('expected files in additionalFiles match actual extraction', () => {
+    const readmeSource = readFileSync('README.md', 'utf-8');
+    const expectedFiles = getExpectedFiles(readmeSource, 'README.md');
 
-      export function Counter() {
-        const [count, setCount] = useState(0);
-        return <button onClick={() => setCount(c => c + 1)}>{count}</button>;
-      }
+    for (const mdFile of mdFiles) {
+      const found = readmeFiles.find(f => f.path === mdFile)!;
+      const actualFiles = extractFile(found.content, mdFile);
 
-      // Continuation of counter.tsx
-      export default Counter;",
-            "path": "counter.tsx",
-          },
-        ],
+      for (const actual of actualFiles) {
+        const expected = expectedFiles.get(actual.path);
+        if (expected !== undefined) {
+          expect(actual.content, `${mdFile} → ${actual.path}`).toBe(expected);
+        }
       }
-    `);
+    }
   });
 });

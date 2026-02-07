@@ -21,7 +21,21 @@ Annotate fenced code blocks in your Markdown with `<!-- @codeblock -->` comments
 
 This README itself uses `@codeblock` annotations ([view source](https://raw.githubusercontent.com/hediet/md-codeblocks/main/README.md)). The example below is a valid Markdown document that can itself be extracted:
 
-<!-- @codeblock example.md -->
+<!-- @codeblock
+file: example.md
+additionalFiles:
+  - suffix: .expected/counter.tsx
+    content: |-
+      import { useState } from "react";
+
+      export function Counter() {
+        const [count, setCount] = useState(0);
+        return <button onClick={() => setCount(c => c + 1)}>{count}</button>;
+      }
+
+      // Continuation of counter.tsx
+      export default Counter;
+-->
 ````markdown
 <!-- @codeblock-config
 outDir: .examples
@@ -44,13 +58,23 @@ export default Counter;
 ```
 ````
 
-Running `codeblock-extractor extract README.md` extracts `.examples/example.md`, which can itself be extracted to produce `counter.tsx`.
+Running `codeblock-extractor extract README.md` extracts `.examples/example.md`, which can itself be extracted to produce `.examples/counter.tsx`.
 
 ### Document Config (`@codeblock-config`)
 
 A `@codeblock-config` comment sets the output directory and default prefix/postfix for all generated files:
 
-<!-- @codeblock config-example.md -->
+<!-- @codeblock
+file: config-example.md
+additionalFiles:
+  - suffix: .expected/greeter.ts
+    content: |-
+      // Auto-generated — do not edit
+      export function greet(name: string) {
+        return `Hello, ${name}!`;
+      }
+      export {};
+-->
 ````markdown
 <!-- @codeblock-config
 outDir: .examples
@@ -68,11 +92,21 @@ export function greet(name: string) {
 ```
 ````
 
+Extracting the above produces `.examples/greeter.ts` with the prefix and postfix applied.
+
 ### Block Annotations (`@codeblock`)
 
 Each `@codeblock` comment can specify a filename, per-file prefix/postfix, replacements, and more:
 
-<!-- @codeblock annotation-example.md -->
+<!-- @codeblock
+file: annotation-example.md
+additionalFiles:
+  - suffix: .expected/math.ts
+    content: |-
+      export const answer = 42;
+
+      export const pi = 3.14;
+-->
 ````markdown
 <!-- @codeblock-config
 outDir: .examples
@@ -99,6 +133,8 @@ skip: true
 export const pi = 3.14;
 ```
 ````
+
+Extracting the above produces `.examples/math.ts` with `PLACEHOLDER` replaced by `42`.
 
 ## CLI Usage
 
