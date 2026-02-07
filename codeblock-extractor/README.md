@@ -2,6 +2,10 @@
 
 Extract annotated code blocks from Markdown into real files — so language servers, linters, and other tooling can check your documentation examples.
 
+<!-- @codeblock-config
+outDir: .examples
+-->
+
 ## Install
 
 ```sh
@@ -94,6 +98,22 @@ additionalFiles:      # extra files generated alongside
 
 ## Library API
 
+
+<!-- @codeblock
+file: example.ts
+prefix: |
+  import * as fs from "fs";
+  const logged: string[] = [];
+  const log = (...args: unknown[]) => logged.push(args.map(String).join(" "));
+replace:
+  - find: "console.log"
+    with: "log"
+additionalFiles:
+  - suffix: .expected/filePaths.txt
+    content: |
+      example.ts
+      example.expected/filePaths.txt
+-->
 ```ts
 import { parse, generate } from "@vscode/codeblock-extractor";
 
