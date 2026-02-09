@@ -29,10 +29,6 @@ importers:
         version: 2.1.9(@types/node@25.2.1)
 
   codeblock-extractor-vscode:
-    dependencies:
-      '@vscode/codeblock-extractor':
-        specifier: workspace:*
-        version: link:../codeblock-extractor
     devDependencies:
       '@rollup/plugin-commonjs':
         specifier: ^28.0.0
@@ -49,6 +45,9 @@ importers:
       '@types/vscode':
         specifier: ^1.85.0
         version: 1.109.0
+      '@vscode/codeblock-extractor':
+        specifier: workspace:*
+        version: link:../codeblock-extractor
       '@vscode/vsce':
         specifier: ^3.0.0
         version: 3.7.1
