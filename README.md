@@ -10,7 +10,7 @@ outDir: .examples
 
 | Package | Description |
 |---------|-------------|
-| [`@vscode/codeblock-extractor`](codeblock-extractor/) | CLI & library for extracting annotated code blocks |
+| [`@hediet/codeblock-extractor`](codeblock-extractor/) | CLI & library for extracting annotated code blocks |
 | [`codeblock-extractor-vscode`](codeblock-extractor-vscode/) | VS Code extension with language features inside Markdown code blocks |
 
 ## How It Works
@@ -168,8 +168,8 @@ See the [extension README](codeblock-extractor-vscode/README.md) for details.
 
 ```sh
 pnpm install
-pnpm --filter @vscode/codeblock-extractor run build
-pnpm --filter @vscode/codeblock-extractor run test
+pnpm --filter @hediet/codeblock-extractor run build
+pnpm --filter @hediet/codeblock-extractor run test
 ```
 
 ## License

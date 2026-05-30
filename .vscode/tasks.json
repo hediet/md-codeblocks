@@ -5,7 +5,7 @@
       "label": "Watch CLI",
       "type": "shell",
       "command": "pnpm",
-      "args": ["--filter", "@vscode/codeblock-extractor", "exec", "tsc", "--watch"],
+      "args": ["--filter", "@hediet/codeblock-extractor", "exec", "tsc", "--watch"],
       "group": "build",
       "isBackground": true,
       "problemMatcher": "$tsc-watch",

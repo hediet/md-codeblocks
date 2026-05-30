@@ -1,6 +1,6 @@
 # Codeblock Extractor for VS Code
 
-Editor integration for `@vscode/codeblock-extractor`. Get language features (hover, completions, diagnostics) inside Markdown code blocks.
+Editor integration for `@hediet/codeblock-extractor`. Get language features (hover, completions, diagnostics) inside Markdown code blocks.
 
 ## Features
 
@@ -87,7 +87,7 @@ postfix: |           # Appended to all files
 
 ## Related
 
-- [@vscode/codeblock-extractor](https://www.npmjs.com/package/@vscode/codeblock-extractor) - CLI and library
+- [@hediet/codeblock-extractor](https://www.npmjs.com/package/@hediet/codeblock-extractor) - CLI and library
 
 ## License
 

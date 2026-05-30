@@ -1,5 +1,5 @@
 {
-  "name": "@vscode/codeblock-extractor",
+  "name": "@hediet/codeblock-extractor",
   "version": "0.1.0",
   "description": "Extract and verify code blocks from Markdown documentation",
   "type": "module",

@@ -3,7 +3,7 @@
   "type": "module",
   "packageManager": "pnpm@9.15.0",
   "scripts": {
-    "extract": "pnpm --filter @vscode/codeblock-extractor run build && node codeblock-extractor/dist/cli/index.js extract README.md codeblock-extractor/README.md codeblock-extractor-vscode/README.md",
+    "extract": "pnpm --filter @hediet/codeblock-extractor run build && node codeblock-extractor/dist/cli/index.js extract README.md codeblock-extractor/README.md codeblock-extractor-vscode/README.md",
     "test-readme": "vitest run --config vitest.config.ts"
   },
   "devDependencies": {

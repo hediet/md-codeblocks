@@ -1,4 +1,4 @@
-# @vscode/codeblock-extractor
+# @hediet/codeblock-extractor
 
 Extract annotated code blocks from Markdown into real files — so language servers, linters, and other tooling can check your documentation examples.
 
@@ -9,7 +9,7 @@ outDir: .examples
 ## Install
 
 ```sh
-npm install @vscode/codeblock-extractor
+npm install @hediet/codeblock-extractor
 ```
 
 ## CLI
@@ -115,7 +115,7 @@ additionalFiles:
       example.expected/filePaths.txt
 -->
 ```ts
-import { parse, generate } from "@vscode/codeblock-extractor";
+import { parse, generate } from "@hediet/codeblock-extractor";
 
 const source = fs.readFileSync("README.md", "utf-8");
 const { document, errors } = parse(source, "README.md");
