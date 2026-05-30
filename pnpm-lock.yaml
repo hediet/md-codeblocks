@@ -30,6 +30,9 @@ importers:
 
   codeblock-extractor-vscode:
     devDependencies:
+      '@hediet/codeblock-extractor':
+        specifier: workspace:*
+        version: link:../codeblock-extractor
       '@rollup/plugin-commonjs':
         specifier: ^28.0.0
         version: 28.0.9(rollup@4.57.1)
@@ -45,9 +48,6 @@ importers:
       '@types/vscode':
         specifier: ^1.85.0
         version: 1.109.0
-      '@vscode/codeblock-extractor':
-        specifier: workspace:*
-        version: link:../codeblock-extractor
       '@vscode/vsce':
         specifier: ^3.0.0
         version: 3.7.1
