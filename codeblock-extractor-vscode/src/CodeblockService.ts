@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
-import { parse, Document, CodeBlockNode, getAnnotatedCodeBlocks, generate, GeneratedFile } from '@hediet/codeblock-extractor';
+import { parse, Document, CodeBlockNode, getAnnotatedCodeBlocks, generate, GeneratedFile } from '@hediet/md-codeblock-extractor';
 
 /** Cached parse result for a document */
 interface ParsedDocument {

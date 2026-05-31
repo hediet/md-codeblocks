@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import { CodeblockService } from './CodeblockService';
-import { getAnnotatedCodeBlocks, ConfigNode, GeneratedFile } from '@hediet/codeblock-extractor';
+import { getAnnotatedCodeBlocks, ConfigNode, GeneratedFile } from '@hediet/md-codeblock-extractor';
 
 /**
  * Provides diagnostics for @codeblock annotations.

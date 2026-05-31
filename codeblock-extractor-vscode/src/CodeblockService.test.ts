@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { parse, getAnnotatedCodeBlocks } from '@hediet/codeblock-extractor';
+import { parse, getAnnotatedCodeBlocks } from '@hediet/md-codeblock-extractor';
 
 // Mock vscode before importing modules that use it
 vi.mock('vscode', async () => {

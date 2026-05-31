@@ -61,7 +61,7 @@
     "package": "vsce package"
   },
   "devDependencies": {
-    "@hediet/codeblock-extractor": "workspace:*",
+    "@hediet/md-codeblock-extractor": "workspace:*",
     "@vscode/vsce": "^3.0.0",
     "@rollup/plugin-commonjs": "^28.0.0",
     "@rollup/plugin-node-resolve": "^15.3.0",
